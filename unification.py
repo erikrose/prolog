@@ -74,7 +74,8 @@ class Variables:
         self._generated_id += 1
         return V(f'_{self._generated_id}')
 
-    # TODO: Make a nice way to get the final value of a var, going through all intermediate lookups.
+    # TODO: Make a nice way to get the final value of a var, going through all
+    # intermediate lookups.
 
 
 class V:
@@ -114,8 +115,8 @@ class C:
 
 def unify(a, b, vars=None):
     """Try to unify terms ``a`` and ``b``. Raise a CannotUnify subclass if it
-    can't be done. Return a map of variable names to the values necessary to
-    make unification happen if it can."""
+    can't be done. Otherwise, return a Variables instance which maps variable
+    names to the values necessary to make unification succeed."""
     # Inspired by http://learnprolognow.org/lpnpage.php?pagetype=html&pageid=lpn-htmlse5.
     if vars is None:
         vars = Variables()
@@ -144,4 +145,4 @@ def unify(a, b, vars=None):
             unify(c, d, vars)
     else:
         raise TermsOfDifferentType(a, b)
-    return vars.vars
+    return vars

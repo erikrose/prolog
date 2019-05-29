@@ -16,7 +16,7 @@ class BindingsConflict(CannotUnify):
         self.var_name = var_name
         self.existing_value = existing_value
         self.conflicting_value = conflicting_value
-    
+
     def __str__(self):
         return f'Tried to bind {self.var_name} to {repr(self.conflicting_value)}, but it was already bound to {repr(self.existing_value)}.'
 

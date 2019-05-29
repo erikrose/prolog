@@ -41,6 +41,12 @@ def test_complex():
     # X can't be both 1 and 2:
     with raises(BindingsConflict):
         unify(C('foo', V('x'), 2), C('foo', 1, V('x')))
+    # An arbitrary complicated thing:
+    assert unify(C('k', C('s', 'g'), C('t', 'k'  )),
+                 C('k', V('X')     , C('t', V('Y')))) == {
+        'X': C('s', 'g'),
+        'Y': 'k'
+    }
 
 
 def test_nested_complexes():

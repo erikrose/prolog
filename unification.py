@@ -132,9 +132,9 @@ def unify(a, b, vars=None):
         vars.bind(a.name, new_var)
         vars.bind(b.name, new_var)
     elif is_variable(a):
-        vars.bind(a.name, b)  # TODO: need any var.new() here?
+        vars.bind(a.name, b)
     elif is_variable(b):
-        vars.bind(b.name, a)  # TODO: or here?
+        vars.bind(b.name, a)
     elif is_complex(a) and is_complex(b):
         # If the functors are the same and the arities are the same and all the
         # args unify, then the complex terms unify.

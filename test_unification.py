@@ -1,7 +1,7 @@
+from pytest import raises
+
 from .exceptions import BindingsConflict, ComplexTermShapesDiffer, ConstantsDiffer
 from .unification import C, unify, V
-
-from pytest import raises
 
 
 def unify_eq(a, b, vars):
@@ -72,3 +72,10 @@ def test_intermediate_vars():
         'y': V('_1'),
         '_1': 7
     })
+
+
+def test_lookup():
+    """Make sure lookups traverse intermediate variable references."""
+    vars = unify(C('foo', V('y'), C('bar', V('x'))),
+                 C('foo', V('x'), C('bar',    7  )))
+    assert vars['y'] == 7  # y -> _1 -> 7

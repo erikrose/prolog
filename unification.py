@@ -14,6 +14,8 @@ Open questions:
 * How do you represent lists?
 
 """
+from pprint import pformat
+
 from .exceptions import BindingsConflict, ComplexTermShapesDiffer, ConstantsDiffer, TermsOfDifferentType
 
 
@@ -66,7 +68,10 @@ class Variables:
             raise BindingsConflict(var_name, self.vars[var_name], value)
 
     def __getitem__(self, var_name):
-        return self.vars[var_name]
+        """Return the value of a variable, traversing any intermediate variable
+        bindings."""
+        value = self.vars[var_name]
+        return self[value.name] if is_variable(value) else value
 
     def new(self):
         """Generate and return a new variable, for use in unifying 2 other
@@ -74,8 +79,10 @@ class Variables:
         self._generated_id += 1
         return V(f'_{self._generated_id}')
 
-    # TODO: Make a nice way to get the final value of a var, going through all
-    # intermediate lookups.
+    def __str__(self):
+        """Print a representation that can serve as user-facing query
+        results."""
+        return pformat(self.vars)  # Soft-wrap to 80 columns.
 
 
 class V:

@@ -51,3 +51,14 @@ def test_complex():
 
 def test_nested_complexes():
     assert unify(C('foo', C('bar', V('x'))), C('foo', C('bar', 5))) == {'x': 5}
+
+
+def test_intermediate_vars():
+    """Make sure when multiple vars are bound to each other, we can still unify
+    by effectively binding a terminal value to that shared binding."""
+    assert unify(C('foo', V('y'), C('bar', V('x'))),
+                 C('foo', V('x'), C('bar',    7  ))) == {
+        'x': V('_1'),
+        'y': V('_1'),
+        '_1': 7
+    }

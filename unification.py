@@ -84,6 +84,8 @@ class Variables:
         results."""
         return pformat(self.vars)  # Soft-wrap to 80 columns.
 
+    __repr__ = __str__
+
 
 class V:
     """A class that represents a variable name, to distinguish it from an
